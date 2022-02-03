@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "alpaca": "^1.5.27",
+    "jquery": "^3.6.0"
+  }
+}
