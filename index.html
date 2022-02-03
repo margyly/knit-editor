@@ -24,7 +24,34 @@
                                 "description":"Name of the knitting pattern",
                                 "type":"string",
                                 "title":"Pattern Title"
-                            }
+                            },
+                            "authorName":{
+                                "description":"Pattern author' name",
+                                "type":"string",
+                                "title":"Pattern Author"
+                            },
+                            "category":{
+                                "description":"Category of what the pattern creates, e.g., hat, sweater, or scarf",
+                                "type":"string",
+                                "title":"Category",
+                                "enum":[
+                                    "Scarf",
+                                    "Hat",
+                                    "Blanket",
+                                    "Sweater",
+                                    "Vest",
+                                    "Mittens",
+                                    "Gloves",
+                                    "Toy",
+                                    "Other"
+                                ]
+                            },
+                            "description":{
+                                "description":"Short description of what the pattern makes (e.g., Three-Color Nordic Hat)",
+                                "type":"string",
+                                "title":"Description"
+                            },
+
                         },
                         "required":[
                             "patternTitle"
@@ -58,7 +85,25 @@
                                 "size": 20,
                                 "helper": "Please enter the title of the pattern.",
                                 "placeholder": "Enter the title"
-                            }
+                            },
+                            "authorName": {
+                                "size": 20,
+                                "helper": "Please enter the pattern author/designer's name.",
+                                "placeholder": "Enter the name"
+                            },
+                            "category": {
+                                "type": "select",
+                                "helper": "Why kind of product does this make?",
+                                "placeholder": "Enter the category"
+                            },
+                            "description": {
+                                "type": "textarea",
+                                "name": "pattern_description",
+                                "rows": 5,
+                                "cols": 40,
+                                "helper": "Please enter a short description of the pattern.",
+                                "placeholder": "Enter the title"
+                            },
                         }
                     }
                 });
