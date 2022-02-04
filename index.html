@@ -1,114 +1,18 @@
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
-        <link type="text/css" href="https://cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.css" rel="stylesheet" />
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.js"></script>
+
     </head>
     <body>
-        <h1>Knitting Pattern Editor</h1>
-        <div id="form"></div>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $("#form").alpaca({
-                    "schema": {
+        <h1>Knitting Pattrn Editor</h1>
 
-                        "title":"Knitting Pattern",
-                        "description":"A pattern with knitting instructions for a single knitting project",
-                        "type":"object",
-                        "title":"Knitting Pattern",
-                        "properties":{
-                            "patternTitle":{
-                                "description":"Name of the knitting pattern",
-                                "type":"string",
-                                "title":"Pattern Title"
-                            },
-                            "authorName":{
-                                "description":"Pattern author' name",
-                                "type":"string",
-                                "title":"Pattern Author"
-                            },
-                            "category":{
-                                "description":"Category of what the pattern creates, e.g., hat, sweater, or scarf",
-                                "type":"string",
-                                "title":"Category",
-                                "enum":[
-                                    "Scarf",
-                                    "Hat",
-                                    "Blanket",
-                                    "Sweater",
-                                    "Vest",
-                                    "Mittens",
-                                    "Gloves",
-                                    "Toy",
-                                    "Other"
-                                ]
-                            },
-                            "description":{
-                                "description":"Short description of what the pattern makes (e.g., Three-Color Nordic Hat)",
-                                "type":"string",
-                                "title":"Description"
-                            },
+        <p>Create the main pattern file, then sections individually.</p>
 
-                        },
-                        "required":[
-                            "patternTitle"
-                        ]
-                    },
-                    "options": {
-                        "form":{
-                            "attributes":{
-                                "action":"http://httpbin.org/post",
-                                "method":"post"
-                            },
-                            "buttons":{
-                                "submit":{
-                                    "title": "Send Form Data",
-                                    "click": function() {
-                                        var val = this.getValue();
-                                        if (this.isValid(true)) {
-                                            alert("Valid value: " + JSON.stringify(val, null, "  "));
-                                            this.ajaxSubmit().done(function() {
-                                                alert("Posted!");
-                                            });
-                                        } else {
-                                            alert("Invalid value: " + JSON.stringify(val, null, "  "));
-                                        }
-                                    }
-                                }
-                            }
-                          },
-                        "fields": {
-                            "patternTitle": {
-                                "size": 20,
-                                "helper": "Please enter the title of the pattern.",
-                                "placeholder": "Enter the title"
-                            },
-                            "authorName": {
-                                "size": 20,
-                                "helper": "Please enter the pattern author/designer's name.",
-                                "placeholder": "Enter the name"
-                            },
-                            "category": {
-                                "type": "select",
-                                "helper": "Why kind of product does this make?",
-                                "placeholder": "Enter the category"
-                            },
-                            "description": {
-                                "type": "textarea",
-                                "name": "pattern_description",
-                                "rows": 5,
-                                "cols": 40,
-                                "helper": "Please enter a short description of the pattern.",
-                                "placeholder": "Enter the title"
-                            },
-                        }
-                    }
-                });
-            });
-        </script>
+        <ul>
+            <li><a href="./pattern.html">Pattern Editor</a></li>
+            <li><a href="./section.html">Section Editor</a></li>
+        </ul>
+
+        <p>Paste the results of each editor into a text file.</p>
+        <p>In the pattern file, replace each section element with the results of the section editor.</p>
     </body>
 </html>
-

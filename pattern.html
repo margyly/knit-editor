@@ -1,0 +1,261 @@
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link type="text/css" href="https://cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.js"></script>
+    </head>
+    <body>
+        <h1>Knitting Pattern Editor</h1>
+        <div id="form"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#form").alpaca({
+                    "schema": {
+
+                        "title":"Knitting Pattern",
+                        "description":"A pattern with knitting instructions for a single knitting project",
+                        "type":"object",
+                        "title":"Knitting Pattern",
+                        "properties":{
+                            "patternTitle":{
+                                "description":"Name of the knitting pattern",
+                                "type":"string",
+                                "title":"Pattern Title"
+                            },
+                            "authorName":{
+                                "description":"Pattern author' name",
+                                "type":"string",
+                                "title":"Pattern Author"
+                            },
+                            "category":{
+                                "description":"Category of what the pattern creates, e.g., hat, sweater, or scarf",
+                                "type":"string",
+                                "title":"Category",
+                                "enum":[
+                                    "Scarf",
+                                    "Hat",
+                                    "Blanket",
+                                    "Sweater",
+                                    "Vest",
+                                    "Mittens",
+                                    "Gloves",
+                                    "Toy",
+                                    "Other"
+                                ]
+                            },
+                            "description":{
+                                "description":"Short description of what the pattern makes (e.g., Three-Color Nordic Hat)",
+                                "type":"string",
+                                "title":"Description"
+                            },
+                            "sizes":{
+                                "description":"Sizes provided in the pattern (e.g., Children's Small)",
+                                "type":"array",
+                                "title":"Sizes",
+                                "items":{
+                                    "type":"string"
+                                 },
+                                "minItems":1,
+                                "uniqueItems":true
+                            },
+                            "colors":{
+                                "description":"Number of colors of yarn used in the pattern",
+                                "type":"integer",
+                                "minimum": 1,
+                                "maximum": 8
+                            },
+                            "inTheRound":{
+                                "description":"Whether or not most or all of the pattern is knit in the round (true = in the round, false = back and forth",
+                                "type":"boolean"
+                            },
+                            "yarnWeight":{
+                                "description":"Weight (thickness) of the yarn to be used",
+                                "type":"string"
+                            },
+                            "gauge":{
+                                "description":"Number of stitches and rows per inch",
+                                "type":"object",
+                                "properties":{
+                                    "numberOfSts":{
+                                        "description":"Number of stiches that fit into the inchesSts number",
+                                        "type":"integer"
+                                    },
+                                    "inchesSts":{
+                                        "description":"Number of inches that numberOfSts measures across",
+                                        "type":"integer"
+                                    },
+                                    "numberOfRows":{
+                                        "description":"Number of rows that fit into the inchesRows number (optional)",
+                                        "type":"integer"
+                                    },
+                                    "inchesRows":{
+                                        "description":"umber of inches that numberOfRows measures up and down (optional)",
+                                        "type":"integer"
+                                    }
+                                },
+                                "required":[
+                                    "numberOfSts",
+                                    "inchesSts"
+                                ]
+                            },
+                            "image":{
+                               "type":"string",
+                              "format":"uri"
+                            },
+                            "sections":{
+                                "description":"Sections of the pattern (e.g., Sleeve, Brim)",
+                                "type":"array",
+                                "title":"Sections",
+                                "items":{
+                                    "type":"string"
+                                 },
+                                "minItems":1,
+                                "uniqueItems":true
+                            },
+                        },
+                        "required":[
+                            "patternTitle"
+                        ]
+                    },
+                    "options": {
+                        "form":{
+                            "attributes":{
+                                "action":"http://httpbin.org/post",
+                                "method":"post"
+                            },
+                            "buttons":{
+                                "submit":{
+                                    "title": "Send Form Data",
+                                    "click": function() {
+                                        var val = this.getValue();
+                                        if (this.isValid(true)) {
+                                            alert("Valid value: " + JSON.stringify(val, null, "  "));
+                                            this.ajaxSubmit().done(function() {
+                                                alert("Posted!");
+                                            });
+                                        } else {
+                                            alert("Invalid value: " + JSON.stringify(val, null, "  "));
+                                        }
+                                    }
+                                }
+                            }
+                          },
+                        "fields": {
+                            "patternTitle": {
+                                "size": 20,
+                                "label":"Pattern Title",
+                                "placeholder": "Enter the title"
+                            },
+                            "authorName": {
+                                "size": 20,
+                                "label":"Author",
+                                "placeholder": "Enter the name"
+                            },
+                            "category": {
+                                "type": "select",
+                                "label":"Category",
+                                "placeholder": "Enter the category"
+                            },
+                            "description": {
+                                "type": "textarea",
+                                "name": "pattern_description",
+                                "rows": 5,
+                                "cols": 40,
+                                "label":"Description",
+                                "placeholder": "Enter the title"
+                            },
+                            "sizes": {
+                                "label": "Sizes",
+                                "toolbarSticky": true,
+                                "fields": {
+                                    "item": {
+                                        "size": 20
+                                    }
+                                },
+                                "hideToolbarWithChildren": false,
+                                "actionbar": {
+                                    "actions": [{
+                                        "action": "add",
+                                        "enabled": false
+                                    }]
+                                }
+                            },
+                            "colors": {
+                                "type": "number",
+                                "label":"Number of Colors",
+                                "size": 2
+                            },
+                            "inTheRound": {
+                                "rightLabel":"In the Round?",
+                                "form": {
+                                    "buttons": {
+                                        "view": {
+                                            "label": "View JSON",
+                                            "click": function() {
+                                                alert(JSON.stringify(this.getValue(), null, "  "));
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "yarnWeight": {
+                                "size": 20,
+                                "label":"Yarn Weight",
+                                "placeholder": "Enter the yarn weight"
+                            },
+                            "gauge": {
+                                "fields": {
+                                    "numberOfSts": {
+                                        "type": "number",
+                                        "label":"Number of Stitches for Gauge",
+                                        "size": 2
+                                    },
+                                    "inchesSts": {
+                                        "type": "number",
+                                        "label":"Number of Inches Those Stitches Measure",
+                                        "size": 2
+                                    },
+                                    "numberOfRows": {
+                                        "type": "number",
+                                        "label":"Number of Rows for Gauge",
+                                        "size": 2
+                                    },
+                                    "inchesRows": {
+                                        "type": "number",
+                                        "label":"Number of Inches Those Rows Measure",
+                                        "size": 2
+                                    }
+                                },
+                            },
+                            "image": {
+                                "type": "url",
+                                "label":"URL of an Image of What the Pattern Makes"
+                            },
+                            "sections": {
+                                "label": "Sections",
+                                "toolbarSticky": true,
+                                "fields": {
+                                    "item": {
+                                        "size": 20
+                                    }
+                                },
+                                "hideToolbarWithChildren": false,
+                                "actionbar": {
+                                    "actions": [{
+                                        "action": "add",
+                                        "enabled": false
+                                    }]
+                                }
+                            },
+
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
+
