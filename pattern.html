@@ -8,7 +8,9 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.js"></script>
     </head>
     <body>
-        <h1>Knitting Pattern Editor</h1>
+        <h1>Knitting Pattern Editor: Main Pattern</h1>
+
+        <p><a href="./index.html">Return to main page.</a></p>
         <div id="form"></div>
         <script type="text/javascript">
             $(document).ready(function() {
@@ -21,19 +23,16 @@
                         "title":"Knitting Pattern",
                         "properties":{
                             "patternTitle":{
-                                "description":"Name of the knitting pattern",
-                                "type":"string",
-                                "title":"Pattern Title"
+                                "title":"Name of the knitting pattern",
+                                "type":"string"
                             },
                             "authorName":{
-                                "description":"Pattern author' name",
-                                "type":"string",
-                                "title":"Pattern Author"
+                                "title":"Pattern author's name",
+                                "type":"string"
                             },
                             "category":{
-                                "description":"Category of what the pattern creates, e.g., hat, sweater, or scarf",
+                                "title":"Category of what the pattern creates, e.g., hat, sweater, or scarf",
                                 "type":"string",
-                                "title":"Category",
                                 "enum":[
                                     "Scarf",
                                     "Hat",
@@ -47,14 +46,12 @@
                                 ]
                             },
                             "description":{
-                                "description":"Short description of what the pattern makes (e.g., Three-Color Nordic Hat)",
-                                "type":"string",
-                                "title":"Description"
+                                "title":"Short description of what the pattern makes (e.g., Three-Color Nordic Hat)",
+                                "type":"string"
                             },
                             "sizes":{
-                                "description":"Sizes provided in the pattern (e.g., Children's Small)",
+                                "title":"Sizes provided in the pattern (e.g., Children's Small)",
                                 "type":"array",
-                                "title":"Sizes",
                                 "items":{
                                     "type":"string"
                                  },
@@ -62,37 +59,37 @@
                                 "uniqueItems":true
                             },
                             "colors":{
-                                "description":"Number of colors of yarn used in the pattern",
+                                "title":"Number of colors of yarn used in the pattern",
                                 "type":"integer",
                                 "minimum": 1,
                                 "maximum": 8
                             },
                             "inTheRound":{
-                                "description":"Whether or not most or all of the pattern is knit in the round (true = in the round, false = back and forth",
+                                "title":"Whether or not most or all of the pattern is knit in the round (true = in the round, false = back and forth)",
                                 "type":"boolean"
                             },
                             "yarnWeight":{
-                                "description":"Weight (thickness) of the yarn to be used",
-                                "type":"string"
+                                "type":"string",
+                                "title": "Weight (thickness) of the yarn to be used"
                             },
                             "gauge":{
-                                "description":"Number of stitches and rows per inch",
+                                "title":"Number of stitches and rows per inch",
                                 "type":"object",
                                 "properties":{
                                     "numberOfSts":{
-                                        "description":"Number of stiches that fit into the inchesSts number",
+                                        "title":"Number of stiches that fit into the inchesSts number",
                                         "type":"integer"
                                     },
                                     "inchesSts":{
-                                        "description":"Number of inches that numberOfSts measures across",
+                                        "title":"Number of inches that numberOfSts measures across",
                                         "type":"integer"
                                     },
                                     "numberOfRows":{
-                                        "description":"Number of rows that fit into the inchesRows number (optional)",
+                                        "title":"Number of rows that fit into the inchesRows number (optional)",
                                         "type":"integer"
                                     },
                                     "inchesRows":{
-                                        "description":"umber of inches that numberOfRows measures up and down (optional)",
+                                        "title":"umber of inches that numberOfRows measures up and down (optional)",
                                         "type":"integer"
                                     }
                                 },
@@ -102,13 +99,13 @@
                                 ]
                             },
                             "image":{
-                               "type":"string",
-                              "format":"uri"
+                                "title":"Picture of the finished work",
+                                "type":"string",
+                                "format":"uri"
                             },
                             "sections":{
-                                "description":"Sections of the pattern (e.g., Sleeve, Brim)",
+                                "title":"Sections of the pattern (e.g., Sleeve, Brim)",
                                 "type":"array",
-                                "title":"Sections",
                                 "items":{
                                     "type":"string"
                                  },
@@ -132,10 +129,10 @@
                                     "click": function() {
                                         var val = this.getValue();
                                         if (this.isValid(true)) {
-                                            alert("Valid value: " + JSON.stringify(val, null, "  "));
-                                            this.ajaxSubmit().done(function() {
-                                                alert("Posted!");
-                                            });
+                                            alert("Valid value: " + JSON.stringify(val, null, "  ")
+                                                );
+                                            prompt("Copy to clipboard:", JSON.stringify(val, null, "  ")
+                                                );
                                         } else {
                                             alert("Invalid value: " + JSON.stringify(val, null, "  "));
                                         }
@@ -144,21 +141,6 @@
                             }
                           },
                         "fields": {
-                            "patternTitle": {
-                                "size": 20,
-                                "label":"Pattern Title",
-                                "placeholder": "Enter the title"
-                            },
-                            "authorName": {
-                                "size": 20,
-                                "label":"Author",
-                                "placeholder": "Enter the name"
-                            },
-                            "category": {
-                                "type": "select",
-                                "label":"Category",
-                                "placeholder": "Enter the category"
-                            },
                             "description": {
                                 "type": "textarea",
                                 "name": "pattern_description",
@@ -183,11 +165,6 @@
                                     }]
                                 }
                             },
-                            "colors": {
-                                "type": "number",
-                                "label":"Number of Colors",
-                                "size": 2
-                            },
                             "inTheRound": {
                                 "rightLabel":"In the Round?",
                                 "form": {
@@ -200,39 +177,6 @@
                                         }
                                     }
                                 }
-                            },
-                            "yarnWeight": {
-                                "size": 20,
-                                "label":"Yarn Weight",
-                                "placeholder": "Enter the yarn weight"
-                            },
-                            "gauge": {
-                                "fields": {
-                                    "numberOfSts": {
-                                        "type": "number",
-                                        "label":"Number of Stitches for Gauge",
-                                        "size": 2
-                                    },
-                                    "inchesSts": {
-                                        "type": "number",
-                                        "label":"Number of Inches Those Stitches Measure",
-                                        "size": 2
-                                    },
-                                    "numberOfRows": {
-                                        "type": "number",
-                                        "label":"Number of Rows for Gauge",
-                                        "size": 2
-                                    },
-                                    "inchesRows": {
-                                        "type": "number",
-                                        "label":"Number of Inches Those Rows Measure",
-                                        "size": 2
-                                    }
-                                },
-                            },
-                            "image": {
-                                "type": "url",
-                                "label":"URL of an Image of What the Pattern Makes"
                             },
                             "sections": {
                                 "label": "Sections",
